@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Expense Tracker</h1>
+        <h2>Total Expense: ${{ total_expense }}</h2>
+        
+        <!-- Form to add new expense -->
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Expense</button>
+        </form>
+        
+        <!-- Reset Button to reset total expenses and recent receipts -->
+        <form method="POST" action="{% url 'reset_expenses' %}">
+            {% csrf_token %}
+            <button type="submit">Reset All Expenses</button>
+        </form>
+        
+        <!-- Visualization Chart -->
+        <div class="chart">
+            <h2>Expense Summary by Category</h2>
+            <img src="data:image/png;base64,{{ chart }}" alt="Expense Summary Chart">
+        </div>
+
+        <!-- Dropdown for category selection -->
+        <div>
+            <h2>Filter by Category</h2>
+            <form method="GET" action="{% url 'home' %}">
+                <select name="category" onchange="this.form.submit()">
+                    <option value="">Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}" {% if category == request.GET.category %}selected{% endif %}>{{ category }}</option>
+                    {% endfor %}
+                    <option value="all" {% if request.GET.category == "all" %}selected{% endif %}>All Expenses</option>
+                </select>
+            </form>
+        </div>
+
+        <!-- Filtered Expenses List -->
+        <div class="expenses-list">
+            <h2>Filtered Recent Expenses</h2>
+            <ul>
+                {% for expense in filtered_expenses %}
+                    <li>
+                        <strong>Amount:</strong> ${{ expense.amount }}<br>
+                        <strong>Description:</strong> {{ expense.description }}<br>
+                        <strong>Date:</strong> {{ expense.date }}<br>
+                    </li>
+                {% empty %}
+                    <li>No expenses recorded for this category.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

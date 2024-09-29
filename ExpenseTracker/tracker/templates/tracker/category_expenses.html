@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+    <title>Expenses for {{ category_name }}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Expenses for {{ category_name }}</h1>
+        <h2>Total Expense: ${{ total_expense }}</h2>
+
+        <ul>
+            {% for expense in expenses %}
+                <li>
+                    <strong>Amount:</strong> ${{ expense.amount }}<br>
+                    <strong>Description:</strong> {{ expense.description }}<br>
+                    <strong>Date:</strong> {{ expense.date }}<br>
+                </li>
+            {% empty %}
+                <li>No expenses recorded for this category.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+</body>
+</html>

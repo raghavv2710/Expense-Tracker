@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.expenses-list {
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none; /* Removes default bullet points */
+    padding: 0; /* Removes default padding */
+}
+
+li {
+    background-color: #e9ecef; /* Light gray background */
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 3px;
+}
